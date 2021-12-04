@@ -10,9 +10,11 @@
 <meta charset="UTF-8">
 <title>EmployeeList.jsp</title>
 <link rel="stylesheet" type="text/css" href="<%=cp %>/css/main.css">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com"> <!--  crossorigin -->
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
+
 </head>
 <body>
 

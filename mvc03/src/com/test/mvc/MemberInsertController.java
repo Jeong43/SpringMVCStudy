@@ -1,16 +1,12 @@
-/*=================================
+/*=======================================
    MemberInsertController.java
    - 사용자 정의 컨트롤러
-   - 회원 정보 추가 액션
-   - DAO 객체에 대한 의존성 주입
+   - 회원 데이터 추가 액션 처리 클래스
+   - DAO 객체에 대한 의존성 주입 준비
      → setter 메소드 추가
-=================================*/
-
-///////////////// 도전 /////////////////
+=======================================*/
 
 package com.test.mvc;
-
-import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
+// 『implements Controller』 혹은 『extends AbstractController』
+//-- 서블릿에서 HttpServlet 을 상속받은 서블릿 객체 역할
 public class MemberInsertController implements Controller
 {	
 	// ※ MemberDAO 객체에 대한 의존성 주입을 위한 준비
@@ -38,34 +36,26 @@ public class MemberInsertController implements Controller
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		// ① 멤버 추가
-		int add = 0;
+		// ① 멤버 추가 준비
 		String name = request.getParameter("name");
 		String telephone = request.getParameter("telephone");
 		
-		MemberDTO dto = new MemberDTO();
-		dto.setName(name);
-		dto.setTelephone(telephone);
-		
-		// ② 멤버 조회
-		int count = 0;
-		ArrayList<MemberDTO> lists = new ArrayList<MemberDTO>();
-		
+		// ② 작업
 		try
 		{
-			add = dao.add(dto);
-			count = dao.count();
-			lists = dao.lists();
+			MemberDTO dto = new MemberDTO();
+			dto.setName(name);
+			dto.setTelephone(telephone);
+			
+			dao.add(dto);
 		}
 		catch (Exception e)
 		{
 			System.out.println(e.toString());
 		}
 
-		mav.setViewName("/WEB-INF/view/MemberList.jsp");
-		mav.addObject("add", add);
-		mav.addObject("count", count);
-		mav.addObject("lists", lists);
+		//mav.setViewName("/WEB-INF/view/MemberList.jsp");	// → X (뷰를 지정했으나 list 에 관한 정보 없음)
+		mav.setViewName("redirect:memberlist.action");		// → O (컨트롤러를 통해 요청 → count, list 얻음)
 		
 		return mav;
 
