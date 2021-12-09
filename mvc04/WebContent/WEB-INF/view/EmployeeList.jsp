@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
@@ -11,6 +12,7 @@
 <title>EmployeeList.jsp</title>
 <link rel="stylesheet" type="text/css" href="<%=cp %>/css/main.css">
 
+<!-- 폰트 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com"> <!--  crossorigin -->
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
@@ -18,12 +20,12 @@
 </head>
 <body>
 
-<!-----------------------------------------------------------------------
+<!------------------------------------------------------------------------
   #15. EmployeeList.jsp
   - 직원 리스트 출력 페이지
   - 관리자가 접근하는 직원 데이터 출력 페이지
     (일반 직원이 접근하는 직원 데이터 출력 페이지는 EmpList.jsp 로 구성
------------------------------------------------------------------------->
+------------------------------------------------------------------------->
 
 <div>
 	<!-- 메뉴 영역 -->
@@ -39,7 +41,8 @@
 		
 		<div>
 			<form action="">
-				<input type="button" value="직원 추가" class="btn" />
+				<input type="button" value="직원 추가" class="btn" 
+				onclick="location.href='employeeinsertform.action'"/>
 			</form>
 		</div>
 		<br> <br>
@@ -97,9 +100,17 @@
 				<td>${employee.regionName }</td>
 				<td>${employee.departmentName }</td>
 				<td>${employee.positionName }</td>
+				
+				<%-- 
 				<td>${employee.basicPay }</td>
 				<td>${employee.extraPay }</td>
-				<td>${employee.pay }</td>
+				<td>${employee.pay }</td> 
+				--%>
+							
+				<td><fmt:formatNumber value="${employee.basicPay }" groupingUsed="true"></fmt:formatNumber></td>
+				<td><fmt:formatNumber value="${employee.extraPay }" groupingUsed="true"></fmt:formatNumber></td>
+				<td><fmt:formatNumber value="${employee.pay }" groupingUsed="true"></fmt:formatNumber></td>
+				
 				<td>${employee.grade==0 ? "관리자" : "일반사원" }</td>
 				<td><button type="button" class="btn updateBtn">수정</button></td>
 				<td><button type="button" class="btn deleteBtn">삭제</button></td>
