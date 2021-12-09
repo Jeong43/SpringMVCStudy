@@ -7,7 +7,7 @@ body, p, div, span, input, table, th, td, select, textarea
    font-size: 14pt;
    color: #343;
    font-family: 맑은 고딕;
-   font-family: 'Nanum Myeongjo', serif;
+   /* font-family: 'Nanum Myeongjo', serif; */
 }
 
 a
