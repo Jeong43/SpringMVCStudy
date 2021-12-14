@@ -51,7 +51,8 @@
 		{
 			// 데이터 검사 (누락된 입력값이 있는지 여부 확인)
 			if( $("#name").val()=="" || $("#ssn1").val()=="" || $("#ssn2").val()=="" 
-				 || $("#birthday").val()=="" || $("#telephone").val()=="" || $("#basicPay").val()=="" )
+				 || $("#birthday").val()=="" || $("#telephone").val()==""
+				 || $("#basicPay").val()=="" || $("#extraPay").val()=="" )
 			{
 				$("#err").html("필수 입력 사항이 누락되었습니다.");
 				$("#err").css("display", "inline");

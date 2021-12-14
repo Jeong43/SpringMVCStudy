@@ -107,17 +107,45 @@ public class PositionDAO implements IPositionDAO
 	}
 
 	@Override
-	public Position searchId(String positionId)
+	public Position searchId(String positionId) throws SQLException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = dataSource.getConnection();
+		
+		Position result = new Position();
+		String sql = "SELECT POSITIONID, POSITIONNAME, MINBASICPAY"
+				   + " FROM POSITIONVIEW"
+				   + " WHERE POSITIONID=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, Integer.parseInt(positionId));
+		ResultSet rs = pstmt.executeQuery();
+		while(rs.next())
+		{
+			result.setPositionId(rs.getString("POSITIONID"));
+			result.setPositionName(rs.getString("POSITIONNAME"));
+			result.setMinBasicPay(rs.getInt("MINBASICPAY"));
+		}
+		
+		return result;
 	}
 
 	@Override
 	public int delCheck(String positionId) throws SQLException
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		Connection conn = dataSource.getConnection();
+		
+		int result = 0;
+		String sql = "SELECT DELCHECK"
+				   + " FROM POSITIONVIEW"
+				   + " WHERE POSITIONID=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, Integer.parseInt(positionId));
+		ResultSet rs = pstmt.executeQuery();
+		while(rs.next())
+		{
+			result = rs.getInt("DELCHECK");
+		}
+		
+		return result;
 	}
 	
 	

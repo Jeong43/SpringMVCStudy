@@ -146,6 +146,32 @@
 		<property name="dao" ref="departmentDAO"></property>
 	</bean>
 	
+	
+	<!-- Position 관련 Controller 등록 -->
+	<bean name="/positionlist.action" class="com.test.mvc.PositionListController">
+		<property name="dao" ref="positionDAO"></property>
+	</bean>
+	
+	<bean name="/positioninsertform.action" class="com.test.mvc.PositionInsertFormController">
+	</bean>
+	
+	<bean name="/positioninsert.action" class="com.test.mvc.PositionInsertController">
+		<property name="dao" ref="positionDAO"></property>
+	</bean>
+	
+	<bean name="/positionupdateform.action" class="com.test.mvc.PositionUpdateFormController">
+		<property name="dao" ref="positionDAO"></property>
+	</bean>
+	
+	<bean name="/positionupdate.action" class="com.test.mvc.PositionUpdateController">
+		<property name="dao" ref="positionDAO"></property>
+	</bean>
+	
+	<bean name="/positiondelete.action" class="com.test.mvc.PositionDeleteController">
+		<property name="dao" ref="positionDAO"></property>
+	</bean>
+	
+	
 	<!-- Logion 및 Logout 관련 Controller 등록 -->
 	<bean name="/loginform.action" class="com.test.mvc.LoginFormController">
 	</bean>
