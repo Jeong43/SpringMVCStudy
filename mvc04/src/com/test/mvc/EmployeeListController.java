@@ -33,7 +33,7 @@ public class EmployeeListController implements Controller
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception
 	{
 		ModelAndView mav = new ModelAndView();
-/*
+
 		// 세션 처리에 따른 추가 구성 ------------------------------------------------
 		HttpSession session = request.getSession();
 		if (session.getAttribute("name")==null)				//-- 로그인을 하지 못한 상황
@@ -50,7 +50,6 @@ public class EmployeeListController implements Controller
 		}
 		
 		// ------------------------------------------------ 세션 처리에 따른 추가 구성 
-*/		
 		
 		ArrayList<Employee> employeeList = new ArrayList<Employee>();
 		

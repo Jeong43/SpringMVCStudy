@@ -92,10 +92,6 @@
 		<property name="dao" ref="employeeDAO"></property>
 	</bean>
 	
-	<bean name="/emplist.action" class="com.test.mvc.EmpListController">
-		<property name="dao" ref="employeeDAO"></property>
-	</bean>
-	
 	
 	<!-- Region 관련 Controller 등록 -->
 	<bean name="/regionlist.action" class="com.test.mvc.RegionListController">
@@ -172,6 +168,24 @@
 	</bean>
 	
 	
+	<!-- 일반회원 리스트 페이지 관련 Controller 등록 -->
+	<bean name="/emplist.action" class="com.test.mvc.EmpListController">
+		<property name="dao" ref="employeeDAO"></property>
+	</bean>
+	
+	<bean name="/empregionlist.action" class="com.test.mvc.EmpRegionListController">
+		<property name="dao" ref="regionDAO"></property>
+	</bean>
+	
+	<bean name="/empdepartmentlist.action" class="com.test.mvc.EmpDepartmentListController">
+		<property name="dao" ref="departmentDAO"></property>
+	</bean>
+	
+	<bean name="/emppositionlist.action" class="com.test.mvc.EmpPositionListController">
+		<property name="dao" ref="positionDAO"></property>
+	</bean>
+	
+
 	<!-- Logion 및 Logout 관련 Controller 등록 -->
 	<bean name="/loginform.action" class="com.test.mvc.LoginFormController">
 	</bean>

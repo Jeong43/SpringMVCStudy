@@ -25,7 +25,7 @@
 <div>
 	<!-- 메뉴 영역 -->
 	<div>
-		<c:import url="EmployeeMenu.jsp"></c:import>
+		<c:import url="EmpMenu.jsp"></c:import>
 	</div>
 
 	<!-- 콘텐츠 영역 -->

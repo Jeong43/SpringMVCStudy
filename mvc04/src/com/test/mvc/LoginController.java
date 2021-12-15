@@ -84,8 +84,6 @@ public class LoginController implements Controller
 			
 		}
 		
-		
-		
 		return mav;
 
 	}
