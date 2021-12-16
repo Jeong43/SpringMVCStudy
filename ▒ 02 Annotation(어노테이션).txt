@@ -481,6 +481,7 @@
 ------------------------------------------------------------------------------------------------------------
 
 ■■■ Spring MVC 관련 Annotation ■■■
+(@ Check~!!!) 
 
 ○ 개요
    Spring Web MVC Framework 는 JAVA 5+ 부터 Annotation 을 제공하며,
@@ -499,17 +500,219 @@
        DB Exception 을 DataAccecssException 으로 변환
        
        
-※ Spring Annotation 에서 정리한 내용 추가 ++ 
+※ Spring Annotation 에서 정리한 내용 추가  ++ (@ Check~!!!) 
+@ 이 안에 업무 로직이 들어감!
 
-○ Service 
+○ @Service
    - 개요
-     : @Service 를 적용한 클래스는 비즈니스 로직이 들어가는 Service 로 등록이 된다.
-       Controller 에 있는 @Autowired 는 @Service(""xxxService")에 등록된
+     : @Service 를 적용한 클래스는 비지니스 로직이 들어가는 Service 로 등록이 된다.
+       Controller 에 있는 @Autowired 는 @Service("xxxService")에 등록된
        『xxxService』와 변수명이 같아야 하며
-       Service 에 있는 @Autowired 는 @Repositiory("xxxDao")에 등록된
+       Service 에 있는 @Autowired 는 @Repository("xxxDao")에 등록된
        『xxxDao』와 변수명이 같아야 한다.
+       
+       @Service("helloService")
+       public class HelloServiceImpl implements HelloService
+       {
+	   @Autowired
+           private HelloDao helloDao;
 
-      
-      
+           public void helo()
+           {
+	       System.out.println("HelloServiceImpl : " + hello());
+               helloDao.selectHello();       // ◀◀◀
+           }
+       }
+
+       // 『helloDao.selectHello();』와 같이 @Autowired 를 이용한
+       // 객체를 활용하여 DAO 객체를 호출한다.
+
+
+○ @Repository
+   - 패키지 : org.springframework.stereotype
+   - 버전 : spring 2.0
+   - 개요
+     : @Repository 어노테이션은 일반적으로 DAO 에 사용되며
+       DB Exception 을 DataAccessException 으로 변환하는 기능을 수행한다.
+
+
+//@ 대략적인 HTML 작업(.jsp) → 서블릿 컨테이너(.jsp 작업)
+○ @Controller
+   - 패키지 : org.springframework.stereotype
+   - 버전 : spring 2.5
+   - 개요
+     : Spring MVC 의 Controller 클래스 선언을 단순화 시켜준다.
+       스프링 컨트롤러, 서블릿 등을 상속할 필요가 없으며,
+       @Controller 로 등록된 클래스 파일에 대한 bean 을 자동으로 생성해준다.
+       Controller 로 사용하고자 하는 클래스에 @Controller 를 지정해주면
+       Component-scan 으로 자동 등록된다.
+   - 추가 설정(xml)
+     : 『<context:component-scan base-package="com.*"/>』
+   - 추가 설정(java)
+     : package com.test;
+
+     import org.springframework.stereotype.Controller;
+
+     @Controller
+     public class SpringC
+     {
+         // ...
+     }
+
+
+○ @RequestMapping
+   - 개요
+     : @RequestMapping 어노테이션은 URL 을 class 또는 method 와
+       mapping 시켜주는 역할을 수행한다.
+       Annotation 을 사용하지 않을 때 지정했던 Controller 등록을 위한
+       URL bean 설정을 생략할 수 있다.
+       클래스에 하나의 url mapping 을 할 경우
+       class 위에 @RequestMapping("/url")을 지정하며,
+       GET 또는 POST 방식 등의 옵션을 부여할 수 있다.
+       해당 method 가 실행된 후, return 페이지가 별도로 정의되어 있지 않으면
+       @RequestMapping("/url")에서 설정된 url로 다시 돌아간다.
+ 
+      @Controller
+      @RequestMapping("/com/test/*")
+      public class HelloController
+      {
+          @RequestMapping(method=RequestMethod.GET, value="go")
+          public returnType getMethodName()
+          {
+              // ... 
+          }
+
+          @RequestMapping(method=RequestMethod.POST, value="go2")
+          public returnType getMethodName2()
+          {
+              // ...
+          }
+      }
+
+
+○ @RequestParam
+   - 개요
+     : @RequestParam 어노테이션은 key=value 형태로
+       화면에서 넘어오는 파라미터를 매핑한 메소드의 파라미터로 지정해준다.
+       주로 get 방식으로 들어오는 request에서 사용한다.
+
+      @Controller
+      public class BlogController
+      {
+	  // ...
+ 
+          @RequestMapping("/editBlog")
+          public ModelMap editBlogHandler(@REquestParam("blogId") int blogId)
+          {
+               blog = blogService.findBlog(blogId);
+               return new ModelMap(blog); 
+          }
+
+      }
+ 
+      // 『.../deitBlog.action?blogId=3』과 같은 요청으로 접근할 때
+      // editBlogHandler() 메소드의 파라미터인 blogId 에는 3이 세팅된다.
+      // 필수 요건이 아닐 경우, @RequestParam(value="id", required="false")와 같이
+      // 옵션을 부여하여 사용할 수 있다.
+
+
+○ @ModelAttribute
+   -개요
+    : @ModelAttribute Annotation 은 화면의 form 속성으로 넘어온 model 을
+      매핑된 method 의 파라미터로 지정해주는 역할을 수행한다.
+      주로 post 타입으로 넘어오는 form 속성의 model 값을 받아올 때 사용한다.
+      (하지만, get / post 모두 통용된다.)
+
+     @Controller
+     public class Blog Controller
+     {
+	// ...
+
+	@RequestMapping("/updateBlog")
+	public String updateBlogHandler(@ModelAttribute("blog") Blog blog)
+	{
+	     blogService.updateBlog(blog);
+             return "redirect:findBlog.action";
+	}
+
+	// ...
+     }
+
+
+○ @SessionAttributes
+   - 개요
+     : @SessionAtributes 어노테이션은 세션 상에서 model 의 정보를
+       유지하고자 할 경우 사용할 수 있다.
+ 
+     @Controller
+     @SessionAttribute("blog")
+     public class BlogController
+     {
+        // ...
+
+        @RequestMapping("/createBlog")
+        public ModelMap createBlogHandler()
+        {
+            blog = new Blog();
+            blog.setRegDate(new Date());
+
+            // ...
+
+            return new ModelMap(blog);
+        }
+
+        // ...
+     }
+
+
+○ @InitBinder
+   - 개요
+     : WebDataBinder 를 초기화하는 method 를 지정할 수 있는 설정을 제공한다.
+       일반적으로 WebDataBinder 는 Annotation handler 메소드의
+       command 와 form 객체 인자를 조작하는데 사용된다.
+       InitBinder 메소드가 필수적으로 변환 값을 가질 필요는 없으며,
+       일반적으로 이런 경우에 void 를 선언한다.
+       특별한 인자는 WebDataBinder 와 WebRequest 또는 Locale 의 조합으로 이루어지며
+       이러한 조건이 만족되면 context-specific editors 를 등록하는 것이 허용된다.
+
+       ·WebDataBinder
+         : WebDataBinder 는 web request parameter 를
+           자바 빈 객체에 바인딩하는 특정한 DataBinder 이다.
+           WebDataBinder 는 웹 환경이 필요하지만,
+           Servlet API 에 의존적이지 않다.
+           Servlet API 에 의존적인 ServletRequestDataBinder 와 같이
+           특정한 DataBinder 를 위한 더 많은 base class 를 제공한다.
+       ·RequestMapping
+         : RequestMapping 어노테이션은 web request 를
+           특정한 handler class 와 handler method 에 mapping 하는 역할을 수행한다.
+           대응하는 handlerMapping(for type level annotation) 과
+           handlerAdapter(for method level annotation) 가 dispatch 에 존재한다면,
+           @RequestMapping 이 처리될 것이다.
+       ·WebRequest
+         : WebRequest 는 웹 요청에 대한 Generic interface 이다.
+           주로 일반 request metadata에 generic web request interceptors 의
+           접근을 허용하여 metadata에 대한 처리를 하기 위한 것이지
+           request 자체를 처리하기 위한 것은 아니다.
+           
+
+※ 참고
+   Annotation 기반 Controller 에서 ServletContext 구하기
+
+   // ...
+
+   @Controller
+   public class DownloadController
+   {
+      @Autowired
+      private ServletContext sc;
+
+      @RequestMapping 
+      public ModelAndView download(@RequestParam("filePath") String filePath) thorws Exception
+      {
+          String path = sc.getRealPath(filePath);
+          return new ModelAndView("common.download", "downloadFile", new File(path));
+      }
+
+   }
 
     
