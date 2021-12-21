@@ -23,6 +23,42 @@
 <!-- 부가적인 테마 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 
+
+<script type="text/javascript">
+
+	$(function()
+	{
+		$(".btnUpdate").click(function()
+		{
+			//alert("test");
+			$("#title").text("회원 정보 수정");
+			
+			var mid = $(this).parents("tr").find("td:eq(0)").text();
+			var name = $(this).parents("tr").find("td:eq(1)").text();
+			var telephone = $(this).parents("tr").find("td:eq(2)").text();
+			
+			$("#mid").val(mid);
+			$("#name").val(name);
+			$("#telephone").val(telephone);
+			
+			$("form").attr("action", "memberupdate.action");
+		});
+				
+				
+				
+				
+		$(".btnDelete").click(function()
+		{
+			if(confirm("현재 선택한 데이터를 정말 삭제하시겠습니까?"))
+			{
+				$(location).attr("href", "memberdelete.action?mid=" + $(this).val());
+			}
+		});
+	});
+
+
+</script>
+
 </head>
 <body>
 
@@ -40,8 +76,8 @@
 			</div>	
 		
 			<div class="panel-body">
-				<form role="form" action="memberinsert.action" method="post">
-					
+				<form role="form" action="memberinsert.action" method="post">					
+					<input type="hidden" id="mid" name="mid">
 					<div class="form-group">
 						<label for="name">NAME : </label>
 						<input type="text" class="form-control" id="name" name="name" />
@@ -91,8 +127,10 @@
 								<td>${member.name }</td>
 								<td>${member.telephone }</td>
 								<td>
-									<button type="button" class="btn btn-default btn-xs btnUpdate" value="${member.mid }">수정</button>
-									<button type="button" class="btn btn-default btn-xs btnDelete" value="${member.mid }">삭제</button>
+									<button type="button" class="btn btn-default btn-xs btnUpdate" 
+									value="${member.mid }">수정</button>
+									<button type="button" class="btn btn-default btn-xs btnDelete" 
+									value="${member.mid }">삭제</button>
 								</td>
 							</tr>
 						</c:forEach>						
