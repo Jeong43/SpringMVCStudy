@@ -160,7 +160,7 @@ http://localhost:8090/mybatisWork02/memberlist.action
   - StudentDTO.java		→ 데이터 전송 객체 자료형 클래스 (DTO)
 				   학생 데이터 저장 및 전송
 
-  - GrandeDTO.java		→ 데이터 전송 객체 자료형 클래스 (DTO)
+  - GradeDTO.java		→ 데이터 전송 객체 자료형 클래스 (DTO)
 				   성적 데이터 저장 및 전송
 
   - IStudentDAO.java		→ 인터페이스
