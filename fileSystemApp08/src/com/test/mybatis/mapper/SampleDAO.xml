@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.test.mybatis.ISampleDAO">
+	
+	<!-- ISampleDAO 의 메소드들에 각각 쿼리문들을 매핑해준다. -->
+	
+</mapper>
